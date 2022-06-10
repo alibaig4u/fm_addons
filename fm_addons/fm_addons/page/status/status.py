@@ -28,9 +28,9 @@ def get_so(offset=None, limit=None, filters=None):
             tso.customer,
             tso.project,
             tso.status_percent,
-            (select IFNULL(COALESCE(status_percent, 0),0) as status_percent  from `tabManufacturing` where sales_order = tso.name limit 1) manufacturing_status,
+            (select IFNULL(COALESCE(status_percent, 0),0) as status_percent  from `tabManufacturing` where sale_order = tso.name limit 1) manufacturing_status,
             (select IFNULL(COALESCE(status_percent, 0),0) as status_percent from `tabOrdering` where sales_order = tso.name limit 1) ordering_status,
-            (select IFNULL(COALESCE(status_percent, 0),0) as status_percent from `tabShop Drawing` where sales_order = tso.name limit 1) sd_status
+            (select IFNULL(COALESCE(status_percent, 0),0) as status_percent from `tabShop Drawing` where sale_order = tso.name limit 1) sd_status
         from
             `tabSales Order` tso
             left join `tabSales Order Item` tsoi

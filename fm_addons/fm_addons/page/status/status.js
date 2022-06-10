@@ -127,23 +127,28 @@ frappe.si_list = {
 						</tr>`
 					})
 					$('#item_data').html(item_html)
+					var sd_status = !is_null(row.sd_status) ? row.sd_status : 0; 
+					var ordering_status = !is_null(row.ordering_status) ? row.ordering_status : 0; 
+					var manufacturing_status = !is_null(row.manufacturing_status) ? row.manufacturing_status : 0; 
+					var delivery_status = 0;
 					$('#document_status').html(`<tr class='document_row' data-so='`+row.order_no+`' data-doc='Shop Drawing'>
 													<td>Shop Drawing</td>
-													<td> `+row.sd_status+` % </td>
+													<td> `+sd_status+` % </td>
 												</tr>
 												<tr class='document_row' data-so='`+row.order_no+`' data-doc='Ordering'>
 													<td>Ordering</td>
-													<td> `+row.ordering_status+` % </td>
+													<td> `+ordering_status+` % </td>
 												</tr>
 												<tr class='document_row' data-so='`+row.order_no+`' data-doc='Manufacturing'>
 													<td>Manufacturing</td>
-													<td> `+row.manufacturing_status+` % </td>
+													<td> `+manufacturing_status+` % </td>
 												</tr>
 												<tr class='document_row' data-so='`+row.order_no+`' data-doc='Delivery Note'>
 													<td>Delivery Note</td>
-													<td> 0 % </td>
+													<td> `+delivery_status+` % </td>
 												</tr>
 					`)
+					frappe.si_list.refreshChartData([sd_status, ordering_status, manufacturing_status, delivery_status]);
 
 					$('.document_row').on('click', function(e){
 						debugger;
@@ -213,7 +218,7 @@ frappe.si_list = {
 	renderChart: function(){
 		debugger;
 		var dom = document.getElementById('echart_status');
-		var myChart = echarts.init(dom)
+		frappe.si_list.myChart = echarts.init(dom)
 		var option = {
 			yAxis: {
 				type: 'category',
@@ -224,15 +229,36 @@ frappe.si_list = {
 			},
 			series: [
 				{
-				data: [120, 200, 150, 80],
+				data: [0, 0, 0, 0],
 				type: 'bar'
 				}
 			]
 		};
-	  	myChart.setOption(option);
+		frappe.si_list.myChart.setOption(option);
 	  
 
-		window.addEventListener('resize', myChart.resize);
+		window.addEventListener('resize', frappe.si_list.myChart.resize);
+	},
+	refreshChartData: function(chartdata){
+		var dataset = chartdata
+		var options = {
+			yAxis: {
+				type: 'category',
+				data: ['Shop Drawing', 'Ordering', 'Manufacturing', 'Delivery Note']
+			},
+			xAxis: {
+				type: 'value'
+			},
+			series: [
+				{
+				data: dataset,
+				type: 'bar'
+				}
+			]
+		}
+		frappe.si_list.myChart.setOption(options)
+
+
 	}
 	
 }
