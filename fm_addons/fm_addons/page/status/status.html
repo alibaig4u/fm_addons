@@ -1,0 +1,95 @@
+<div class="col-md-12 container">
+    <h1 class="heading_size">Status</h1>
+    <div class="filter_section">
+      <div class="col-md-2 sales_order_control"></div>
+      <div class="col-md-2 company_control"></div>
+      <div class="col-md-2 project_control"></div>
+      <button id="filter_btn" style="display: none;"></button>
+    </div>
+    <div class="row"></div>
+    <div class="col-md-12">
+      
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Sales Orders</h2>
+   
+            <table class="col-md-3" id="datatable" 
+            data-pagination="true" 
+            data-pagination-pre-text="Previous" 
+            data-pagination-next-text="Next"
+            data-toggle="table"
+            data-height="530">
+              <thead class="table-head">
+                <tr>
+                  <th data-field="order_no" data-sortable="true">Order No.</th>
+                  <th data-field="customer" data-sortable="true">Customer</th>
+                  <th data-field="project_name" data-sortable="true">Project Name</th>
+                  <th data-field="status_percent" data-sortable="true">Status %</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <h2>Order Status</h2>
+            <table class="table table-hover-tbody">
+              <thead class="table-head ">
+                <tr>
+                  <th>Document</th>
+                  <th>Status %</th>
+                </tr>
+              </thead>
+              <tbody id="document_status">
+                <tr class="document_row" data-doc="Shop Drawing">
+                  <td>Shop Drawing</td>
+                  <td> 0 % </td>
+                </tr>
+                <tr class="document_row" data-doc="Ordering">
+                  <td>Ordering</td>
+                  <td> 0 % </td>
+                </tr>
+                <tr class="document_row" data-doc="Manufacturing">
+                  <td>Manufacturing</td>
+                  <td> 0 % </td>
+                </tr>
+                <tr class="document_row" data-doc="Delivery Note">
+                  <td>Delivery Note</td>
+                  <td> 0 % </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-9">
+            <div class="col-md-12" id="echart_status" style="height: 300px;"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Items</h2>
+            <table class="table table-hover-tbody">
+              <thead class="table-head">
+                <tr>
+                  <th>Item Name</th>
+                  <th>QTY</th>
+                </tr>
+              </thead>
+              <tbody id="item_data">
+                <tr><td colspan="2" style=" text-align: center; font-weight: 500; ">NO DATA</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+     
+      </div>
+    </div>
+
+
+    
+</div>

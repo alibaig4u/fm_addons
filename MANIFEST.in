@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include fm_addons *.css
+recursive-include fm_addons *.csv
+recursive-include fm_addons *.html
+recursive-include fm_addons *.ico
+recursive-include fm_addons *.js
+recursive-include fm_addons *.json
+recursive-include fm_addons *.md
+recursive-include fm_addons *.png
+recursive-include fm_addons *.py
+recursive-include fm_addons *.svg
+recursive-include fm_addons *.txt
+recursive-exclude fm_addons *.pyc
