@@ -48,18 +48,7 @@ def get_so(offset=None, limit=None, filters=None):
 @frappe.whitelist()
 def get_so_items(so=None):
     item_list = frappe.db.sql("""select DISTINCT
-             tsoi.item_code, tsoi.item_name, tsoi.qty
-        from
-            `tabSales Order Item` tsoi
-            where parent = '{}'
-            """.format(so), as_dict=True)
-
-    return item_list
-
-@frappe.whitelist()
-def get_so_items(so=None):
-    item_list = frappe.db.sql("""select DISTINCT
-             tsoi.item_code, tsoi.item_name, tsoi.qty
+             tsoi.item_code, tsoi.item_name, tsoi.description, tsoi.qty
         from
             `tabSales Order Item` tsoi
             where parent = '{}'

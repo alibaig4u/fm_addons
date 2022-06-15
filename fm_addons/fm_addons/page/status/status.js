@@ -84,7 +84,7 @@ frappe.si_list = {
 		});
 
 		page.main.on("click", "#filter_btn", function () {
-			$('#item_data').html('<tr><td colspan="2" style=" text-align: center; font-weight: 500; ">NO DATA</td></tr>')
+			$('#item_data').html('<tr><td colspan="3" style=" text-align: center; font-weight: 500; ">NO DATA</td></tr>')
 			$('#document_status').html(`<tr>
 											<td>Shop Drawing</td>
 											<td> 0 % </td>
@@ -123,6 +123,7 @@ frappe.si_list = {
 					$.each(row.items, function(k,v){
 						item_html += `<tr>
 							<td>`+v.item_name+`</td>
+							<td>`+v.description+`</td>
 							<td>`+v.qty+`</td>
 						</tr>`
 					})
