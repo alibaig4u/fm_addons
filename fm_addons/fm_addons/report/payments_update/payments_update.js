@@ -4,6 +4,11 @@
 
 frappe.query_reports["Payments Update"] = {
 	"filters": [
-
+		{
+			fieldname: "date",
+			label: __("Clearance Date"),
+			fieldtype: "DateRange",
+			default: [frappe.datetime.month_start(), frappe.datetime.now_date()],
+		},
 	]
 };
