@@ -147,15 +147,16 @@ def get_data(filters):
 			else:
 				pay_amount += l.paid_amount
 
-	data.append({
-				'party':"<b>TOTAL</b>",
-				'amount': total_paid_amount,
-			})
-	data.append({
-				'party':"<b>GRAND TOTAL</b>",
-				'amount': g_total_paid_amount,
-				'difference': receive_amount-pay_amount,
-			})
+	if len(sql) > 0:
+		data.append({
+					'party':"<b>TOTAL</b>",
+					'amount': total_paid_amount,
+				})
+		data.append({
+					'party':"<b>GRAND TOTAL</b>",
+					'amount': g_total_paid_amount,
+					'difference': receive_amount-pay_amount,
+				})
 	return data
 
 
