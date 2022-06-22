@@ -82,7 +82,7 @@ def get_data(filters):
 		  		`tabPayment Entry` tpe
 				{}
 		group by 
-		   		tpe.payment_type
+		   		tpe.payment_type, tpe.party_name
 				""".format(conditions),as_dict=True
 		)
 
