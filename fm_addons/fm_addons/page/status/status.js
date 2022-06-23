@@ -197,13 +197,12 @@ frappe.si_list = {
 									frappe.set_route('Form', doctype, docname)
 								}
 								else{
-									frappe.new_doc(doctype, {"against_sales_order": so_doc})
+									frappe.new_doc(doctype, {"sales_order": so_doc})
 								}
 								
 							}
 							else{
 								if (!is_null(docname) && docname != ''){
-									frappe.set_route(doctype,{"sale_order": so_doc})
 									frappe.set_route('Form', doctype, docname)
 								}else{
 									frappe.new_doc(doctype, {"sales_order": so_doc})
