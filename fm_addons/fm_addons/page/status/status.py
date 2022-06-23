@@ -35,7 +35,7 @@ def get_so(offset=None, limit=None, filters=None):
             (select IFNULL(name,"") as name  from `tabManufacturing` where sale_order = tso.name limit 1) manufacturing_name,
             (select IFNULL(name,"") as name  from `tabOrdering` where sales_order = tso.name limit 1) ordering_name,
             (select IFNULL(name,"") as name  from `tabShop Drawing` where sale_order = tso.name limit 1) sd_name,
-            (select IFNULL(parent,"") as name  from `tabDelivery Note` where sales_order = tso.name limit 1) delivery_name
+            (select IFNULL(name,"") as name  from `tabDelivery Note` where sales_order = tso.name limit 1) delivery_name
         from
             `tabSales Order` tso
             left join `tabSales Order Item` tsoi
