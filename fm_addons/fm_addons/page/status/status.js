@@ -180,7 +180,7 @@ frappe.si_list = {
 						if(typeof(so_doc) != 'undefined'){
 							
 							if(['Manufacturing', 'Shop Drawing'].includes(doctype)){
-								if (docname != ''){
+								if (!is_null(docname) && docname != ''){
 									
 									frappe.set_route('Form', doctype, docname)
 								}
@@ -192,7 +192,7 @@ frappe.si_list = {
 								
 							}
 							else if(doctype == 'Delivery Note'){
-								if (docname != ''){
+								if (d!is_null(docname) && docname != ''){
 									
 									frappe.set_route('Form', doctype, docname)
 								}
@@ -202,7 +202,7 @@ frappe.si_list = {
 								
 							}
 							else{
-								if (docname != ''){
+								if (!is_null(docname) && docname != ''){
 									frappe.set_route(doctype,{"sale_order": so_doc})
 									frappe.set_route('Form', doctype, docname)
 								}else{
