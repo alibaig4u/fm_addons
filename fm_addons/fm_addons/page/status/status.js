@@ -192,7 +192,7 @@ frappe.si_list = {
 								
 							}
 							else if(doctype == 'Delivery Note'){
-								if (d!is_null(docname) && docname != ''){
+								if (!is_null(docname) && docname != ''){
 									
 									frappe.set_route('Form', doctype, docname)
 								}
