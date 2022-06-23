@@ -30,7 +30,12 @@ def get_so(offset=None, limit=None, filters=None):
             tso.status_percent,
             (select IFNULL(COALESCE(status_percent, 0),0) as status_percent  from `tabManufacturing` where sale_order = tso.name limit 1) manufacturing_status,
             (select IFNULL(COALESCE(status_percent, 0),0) as status_percent from `tabOrdering` where sales_order = tso.name limit 1) ordering_status,
-            (select IFNULL(COALESCE(status_percent, 0),0) as status_percent from `tabShop Drawing` where sale_order = tso.name limit 1) sd_status
+            (select IFNULL(COALESCE(status_percent, 0),0) as status_percent from `tabShop Drawing` where sale_order = tso.name limit 1) sd_status,
+            (select IFNULL(COALESCE(status_percent, 0),0) as status_percent  from `tabDelivery Note Item` where against_sales_order = tso.name limit 1) delivery_status,
+            (select IFNULL(name,"") as name  from `tabManufacturing` where sale_order = tso.name limit 1) manufacturing_name,
+            (select IFNULL(name,"") as name  from `tabOrdering` where sales_order = tso.name limit 1) ordering_name,
+            (select IFNULL(name,"") as name  from `tabShop Drawing` where sale_order = tso.name limit 1) sd_name,
+            (select IFNULL(parent,"") as name  from `tabDelivery Note Item` where against_sales_order = tso.name limit 1) delivery_name
         from
             `tabSales Order` tso
             left join `tabSales Order Item` tsoi

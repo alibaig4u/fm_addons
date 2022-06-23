@@ -150,23 +150,25 @@ frappe.si_list = {
 					var sd_status = !is_null(row.sd_status) ? row.sd_status : 0; 
 					var ordering_status = !is_null(row.ordering_status) ? row.ordering_status : 0; 
 					var manufacturing_status = !is_null(row.manufacturing_status) ? row.manufacturing_status : 0; 
-					var delivery_status = 0;
-					$('#document_status').html(`<tr class='document_row' data-so='`+row.order_no+`' data-doc='Shop Drawing'>
+					var delivery_status = !is_null(row.delivery_status) ? row.delivery_status : 0;
+					$('#document_status').html(`<tr class='document_row' data-so='`+row.order_no+`' data-docname = '`+row.sd_name+`'   data-doc='Shop Drawing'>
 													<td>Shop Drawing</td>
 													<td> `+sd_status+` % </td>
 												</tr>
-												<tr class='document_row' data-so='`+row.order_no+`' data-doc='Ordering'>
+												<tr class='document_row' data-so='`+row.order_no+`' data-docname = '`+row.ordering_name+`' data-doc='Ordering'>
 													<td>Ordering</td>
 													<td> `+ordering_status+` % </td>
 												</tr>
-												<tr class='document_row' data-so='`+row.order_no+`' data-doc='Manufacturing'>
+												<tr class='document_row' data-so='`+row.order_no+`' data-docname = '`+row.manufacturing_name+`' data-doc='Manufacturing'>
 													<td>Manufacturing</td>
 													<td> `+manufacturing_status+` % </td>
 												</tr>
-												<tr class='document_row' data-so='`+row.order_no+`' data-doc='Delivery Note'>
+												<tr class='document_row' data-so='`+row.order_no+`' data-docname = '`+row.delivery_name+`' data-doc='Delivery Note'>
 													<td>Delivery Note</td>
 													<td> `+delivery_status+` % </td>
 												</tr>
+												
+												
 					`)
 					frappe.si_list.refreshChartData([delivery_status, manufacturing_status, ordering_status, sd_status]);
 
@@ -174,16 +176,38 @@ frappe.si_list = {
 						debugger;
 						var so_doc = $(this).data('so');
 						var doctype = $(this).data('doc');
+						var docname = $(this).data('docname');
 						if(typeof(so_doc) != 'undefined'){
 							
 							if(['Manufacturing', 'Shop Drawing'].includes(doctype)){
-								frappe.new_doc(doctype, {"sale_order": so_doc})
+								if (docname != ''){
+									
+									frappe.set_route('Form', doctype, docname)
+								}
+								else{
+									
+									frappe.new_doc(doctype, {"sale_order": so_doc})
+								}
+
+								
 							}
 							else if(doctype == 'Delivery Note'){
-								frappe.new_doc(doctype, {"against_sales_order": so_doc})
+								if (docname != ''){
+									
+									frappe.set_route('Form', doctype, docname)
+								}
+								else{
+									frappe.new_doc(doctype, {"against_sales_order": so_doc})
+								}
+								
 							}
 							else{
-								frappe.new_doc(doctype, {"sales_order": so_doc})
+								if (docname != ''){
+									frappe.set_route(doctype,{"sale_order": so_doc})
+									frappe.set_route('Form', doctype, docname)
+								}else{
+									frappe.new_doc(doctype, {"sales_order": so_doc})
+								}
 							}
 							
 							
@@ -220,11 +244,16 @@ frappe.si_list = {
 						"order_no": v.sales_order,
 						"customer": v.customer,
 						"project_name": v.project,
-						"status_percent": v.status_percent,
+						"status_percent": (v.manufacturing_status+v.ordering_status+v.sd_status+v.delivery_name)/4,
 						"manufacturing_status": v.manufacturing_status,
 						"ordering_status": v.ordering_status,
+						"delivery_status":v.delivery_name,
 						"sd_status": v.sd_status,
 						"items": v.items,
+						"manufacturing_name": v.manufacturing_name,
+						"ordering_name": v.ordering_name,
+						"sd_name":v.sd_name,
+						"delivery_name":v.delivery_name,	
 					})
 				})
 
@@ -241,7 +270,7 @@ frappe.si_list = {
 		var option = {
 			yAxis: {
 				type: 'category',
-				data: ['Delivery Note', 'Manufacturing', 'Ordering', 'Shop Drawing']
+				data: ['Delivery Note', 'Manufacturing', 'Ordering', 'Shop Drawing','name']
 				
 			},
 			xAxis: {
@@ -282,4 +311,3 @@ frappe.si_list = {
 	}
 	
 }
-
