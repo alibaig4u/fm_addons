@@ -28,9 +28,11 @@ frappe.si_list = {
 
 
 		frappe.si_list.table = $('#datatable');
+		frappe.si_list.item_table = $('#item_datatable');
 		
 		setTimeout(() => {
-			frappe.si_list.buildTable(frappe.si_list.table, 8, 1)
+			frappe.si_list.buildTable(frappe.si_list.table, 8, 1, false)
+			frappe.si_list.buildTable(frappe.si_list.item_table, 8, 1, true)
 		}, 100);
 
 		
@@ -84,7 +86,8 @@ frappe.si_list = {
 		});
 
 		page.main.on("click", "#filter_btn", function () {
-			$('#item_data').html('<tr><td colspan="3" style=" text-align: center; font-weight: 500; ">NO DATA</td></tr>')
+
+			// $('#item_data').html('<tr><td colspan="3" style=" text-align: center; font-weight: 500; ">NO DATA</td></tr>')
 			$('#document_status').html(`<tr>
 											<td>Shop Drawing</td>
 											<td> 0 % </td>
@@ -102,32 +105,48 @@ frappe.si_list = {
 											<td> 0 % </td>
 										</tr>
 								`);
+			frappe.si_list.item_table.bootstrapTable('load', []);
 			frappe.si_list.table.bootstrapTable('load', frappe.si_list.setSOList(1, 10));
 		})
 
 	},
-	buildTable: function ($el, cells, rows) {
+	buildTable: function ($el, cells, rows, is_item_table) {
 		var i; var j; var row
 		var columns = []
 		var data = []
 		debugger;
 		var options = $el.bootstrapTable('getOptions')
-		data = frappe.si_list.setSOList(1, 10)
+		if(!is_item_table){
+			data = frappe.si_list.setSOList(1, 10)
+		}
+
 		$el.bootstrapTable({
 			columns: columns,
 			data: data,
 			onClickRow: function(row, $element, field){
 				debugger;
+				if(!is_item_table){
 					frappe.si_list.so = row.order_no
-					var item_html = ''
-					$.each(row.items, function(k,v){
-						item_html += `<tr>
-							<td>`+v.item_name+`</td>
-							<td>`+v.description+`</td>
-							<td>`+v.qty+`</td>
-						</tr>`
+					// var item_html = ''
+					// $.each(row.items, function(k,v){
+					// 	item_html += `<tr>
+					// 		<td>`+v.item_name+`</td>
+					// 		<td>`+v.description+`</td>
+					// 		<td>`+v.qty+`</td>
+					// 	</tr>`
+					// })
+					// $('#item_data').html(item_html)
+					let item_data = []
+					$.each(row.items, (k, v) => {
+						item_data.push({
+							"item_desc": v.description,
+							"item_qty": v.qty
+						})
 					})
-					$('#item_data').html(item_html)
+
+					frappe.si_list.item_table.bootstrapTable('load', item_data);
+
+
 					var sd_status = !is_null(row.sd_status) ? row.sd_status : 0; 
 					var ordering_status = !is_null(row.ordering_status) ? row.ordering_status : 0; 
 					var manufacturing_status = !is_null(row.manufacturing_status) ? row.manufacturing_status : 0; 
@@ -149,7 +168,7 @@ frappe.si_list = {
 													<td> `+delivery_status+` % </td>
 												</tr>
 					`)
-					frappe.si_list.refreshChartData([sd_status, ordering_status, manufacturing_status, delivery_status]);
+					frappe.si_list.refreshChartData([delivery_status, manufacturing_status, ordering_status, sd_status]);
 
 					$('.document_row').on('click', function(e){
 						debugger;
@@ -172,8 +191,7 @@ frappe.si_list = {
 					
 						
 					})
-
-					
+				}
 
 			}
 		})
@@ -223,7 +241,8 @@ frappe.si_list = {
 		var option = {
 			yAxis: {
 				type: 'category',
-				data: ['Shop Drawing', 'Ordering', 'Manufacturing', 'Delivery Note']
+				data: ['Delivery Note', 'Manufacturing', 'Ordering', 'Shop Drawing']
+				
 			},
 			xAxis: {
 				type: 'value'
@@ -245,7 +264,7 @@ frappe.si_list = {
 		var options = {
 			yAxis: {
 				type: 'category',
-				data: ['Shop Drawing', 'Ordering', 'Manufacturing', 'Delivery Note']
+				data: ['Delivery Note', 'Manufacturing', 'Ordering', 'Shop Drawing']
 			},
 			xAxis: {
 				type: 'value'
