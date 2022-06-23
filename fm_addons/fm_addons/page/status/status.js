@@ -270,7 +270,7 @@ frappe.si_list = {
 		var option = {
 			yAxis: {
 				type: 'category',
-				data: ['Delivery Note', 'Manufacturing', 'Ordering', 'Shop Drawing','name']
+				data: ['Delivery Note', 'Manufacturing', 'Ordering', 'Shop Drawing']
 				
 			},
 			xAxis: {
