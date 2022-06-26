@@ -13,10 +13,10 @@ def create_mr(item_code, qty):
 		mr.company = "Faizy.com"
 		mr.schedule_date = nowdate()
 		mr.transaction_date = nowdate()
-		mr.warehouse = "Store - F"
 		mr.append('items',{
 			"item_code":item_code,
-			"qty": qty
+			"qty": qty,
+			"warehouse" : "Store - F"
 			})
 		mr.save(ignore_permissions=True)
 		mr.submit()
