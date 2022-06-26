@@ -14,7 +14,7 @@ def create_mr(item_code, qty):
 		mr.schedule_date = nowdate()
 		mr.transaction_date = nowdate()
 		mr.append('items',{
-			"item_code":item_code
+			"item_code":item_code,
 			"qty": qty
 			})
 		mr.save(ignore_permissions=True)
