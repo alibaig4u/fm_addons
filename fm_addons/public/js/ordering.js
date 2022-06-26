@@ -1,7 +1,7 @@
 frappe.ui.form.on("Ordering CT", {
 	create_mr: function(frm, cdt, cdn){
 	    var row = locals[cdt][cdn];
-	    
+	    debugger;
 	    var d = new frappe.ui.Dialog({
 		            'title': 'MR REQUIREMENTS',
 		            'fields': [
