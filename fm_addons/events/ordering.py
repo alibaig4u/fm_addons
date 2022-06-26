@@ -13,6 +13,7 @@ def create_mr(item_code, qty):
 		mr.company = "Faizy.com"
 		mr.schedule_date = nowdate()
 		mr.transaction_date = nowdate()
+		mr.material_request_type = "Material Transfer"
 		mr.append('items',{
 			"item_code":item_code,
 			"qty": qty,
